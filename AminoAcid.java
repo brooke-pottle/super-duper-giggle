@@ -3,50 +3,57 @@ import java.util.ArrayList;
 public class AminoAcid {
 	
 	private String fullName;
-	private char aminoLetter;
-	private ArrayList<String> aminoCodon;
+	private String aminoOneLetter;
+	private String aminoThreeLetter;
+	private ArrayList<String> aminoCodons;
 	
-	public AminoAcid(String name, char letter) {
-		aminoCodon = new ArrayList<>();
+	public AminoAcid(String name, String letter3, String letter1, ArrayList<String> codons) {
 		fullName = name;
-		aminoLetter = letter;
+		aminoThreeLetter = letter3;
+		aminoOneLetter = letter1;
+		aminoCodons = codons;
 	}
 	
 	public void setName(String name) {
 		fullName = name;
 	}
 	
-	public void setLetter(char letter) {
-		aminoLetter = letter;
+	public void setOneLetter(String letter1) {
+		aminoOneLetter = letter1;
+	}
+	
+	public void setThreeLetter(String letter3) {
+		aminoThreeLetter = letter3;
 	}
 	
 	public String getName() {
 		return fullName;
 	}
 	
-	public char getLetter() {
-		return aminoLetter;
+	public String getOneLetter() {
+		return aminoOneLetter;
 	}
 	
-	public void addCodon(String codon) {
-		aminoCodon.add(codon);
-		
+	public String getThreeLetter() {
+		return aminoThreeLetter;
 	}
 	
 	public String getCodon(int num) {
-		return aminoCodon.get(num);
+		return aminoCodons.get(num);
+		
+	}
+	
+	public ArrayList<String> getCodons() {
+		return aminoCodons;
 	}
 	
 	public int getListSize() {
-		return aminoCodon.size();
-	}
-	
-	public ArrayList<String> getCodonList() {
-		return aminoCodon;
+		return aminoCodons.size();
 	}
 	
 	public String toString() {
-		return "Amino Acid: " + fullName + "\nAbbreviation: " + aminoLetter;
+		return "Amino Acid: " + fullName + "\n3 letter Abbreviation: " + aminoThreeLetter + 
+			   "\n1 letter Abbreviation: " + aminoOneLetter;
 	}
 	
 }

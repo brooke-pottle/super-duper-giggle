@@ -6,39 +6,60 @@ public class Tester {
 
 	public static void main(String[] args) throws IOException {
 		
-		double total;
+		String acidTable = "aminoAcidTable.csv";
+		String delimiter = ",";
+		
+		ArrayList<AminoAcid> aminoAcidList = new ArrayList<>();
+		
+		Scanner inFile = new Scanner(new File(acidTable));
+		
+		//Skip first line of table header
+		inFile.nextLine();
+		
+		//Repeat until Amino Acid Table is done
+		while(inFile.hasNextLine()) {
+			
+			//Read line and store as a string 
+			String line = inFile.nextLine();
+			//Split string and initialize a String array with the values
+			String[] aminoData = line.split(delimiter);
+			//Declare and initialize variables for name and abbreviations 
+			String name = aminoData[0];
+			String threeLetter = aminoData[1];
+			String oneLetter = aminoData[2];
+			//Declare an ArrayList and loop to add all codons  
+			ArrayList<String> codons = new ArrayList<>();
+			for(int i = 3; i < aminoData.length; i++) {
+					codons.add(aminoData[i]);
+			}
+			
+			//Create an AminoAcid instance based off of iteration's data
+			AminoAcid aminoAcid = new AminoAcid(name, threeLetter, oneLetter, codons);
+			aminoAcidList.add(aminoAcid);
+			
+			}
+		
+		for(AminoAcid acids : aminoAcidList) {
+			System.out.println("Name: " + acids.getName());
+			System.out.println("Three Letter Abbreviation: " + acids.getThreeLetter());
+			System.out.println("One Letter Abbreviation: " + acids.getOneLetter());
+			System.out.println("Codons: " + acids.getCodons());
+			System.out.println();
+		}
+		
+		for(AminoAcid acid : aminoAcidList) {
+			for(int i = 0; i < acid.getListSize(); i++) {
+				System.out.println(calcCodonRF1(acid.getCodon(i)));
+			}
+		}
 		
 		
 		
-		AminoAcid alanine = new AminoAcid("Alanine", 'a');
-		alanine.addCodon("GCT");
-		alanine.addCodon("GCC");
-		alanine.addCodon("GCA");
-		alanine.addCodon("GCG");
-		
-		System.out.println(calcCodonRF1(alanine.getCodon(0)));
-		System.out.println(calcCodonRF1(alanine.getCodon(1)));
-		System.out.println(calcCodonRF1(alanine.getCodon(2)));
-		System.out.println(calcCodonRF1(alanine.getCodon(3)));
-		System.out.println(calcCodonRF1(alanine.getCodon(0)));
-		
-		total = calcCodonRF1(alanine.getCodon(0)) + calcCodonRF1(alanine.getCodon(1)) + 
-				calcCodonRF1(alanine.getCodon(2)) + calcCodonRF1(alanine.getCodon(3));
-		
-		System.out.println(total);
-		System.out.print(calcCodonRF1(alanine.getCodon(0)) / total);
-		
-	
 			
 
 	}
+	
 
-	/**
-	 * 
-	 * @param codon This is the codon the user is searching for
-	 * @return counter This is the amount of codons in the sequence 
-	 * @throws IOException
-	 */
 	public static double calcCodonRF1(String codon) throws IOException { 
 	
 		double counter = 0;
